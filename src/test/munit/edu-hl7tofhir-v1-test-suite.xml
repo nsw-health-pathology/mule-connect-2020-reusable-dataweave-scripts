@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<munit:config name="edu-hl7tofhir-v1-test-suite.xml" />
+	<munit:test name="edu-hl7tofhir-v1-test-suite-edu-hl7tofhir-v1Sub_FlowTest" description="Test" doc:id="7d4c41ce-4b8a-47b8-8cbc-3cc002fac33e" >
+		<munit:execution >
+			<ee:transform doc:name="Transform Message" doc:id="4659f62e-35f4-4e41-a6ab-c0e455bea335" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+
+import modules::gender
+
+output application/java
+---
+[
+	{ expected: "male", 	actual: gender::genderFromCode("M") },
+	{ expected: "female", 	actual: gender::genderFromCode("F") },
+	{ expected: "other", 	actual: gender::genderFromCode("O") },
+	{ expected: "unknown", 	actual: gender::genderFromCode("?") },
+	{ expected: "unknown", 	actual: gender::genderFromCode("") }
+	
+]]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<foreach doc:name="For Each" doc:id="573b1ac3-5700-41e6-a257-27526f853962" collection="#[payload]">
+				<set-variable value="#[payload.actual]" doc:name="Set actual" doc:id="0823690a-5159-4d7f-a976-26c2d6397acc" variableName="actual"/>
+				<set-variable value="#[payload.expected]" doc:name="Set expected" doc:id="92b72954-b6ea-4907-a0c3-d5de3fb2b589" variableName="expected"/>
+				<munit-tools:assert-that doc:name="Assert that" doc:id="634a3ec5-0da2-4f68-ada9-23189b728313" expression="#[vars.expected]" is="#[MunitTools::equalTo(vars.actual)]"/>
+			</foreach>
+		</munit:execution>
+	</munit:test>
+
+
+</mule>

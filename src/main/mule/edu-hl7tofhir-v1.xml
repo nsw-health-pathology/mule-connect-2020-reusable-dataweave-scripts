@@ -142,19 +142,23 @@ output application/json
 		<logger level="INFO" message="post:\hl7-v2\adt:router-config" />
 		<hl7:read doc:name="Read" doc:id="7cb28a6a-d4c2-44c9-8665-b21907a644b7" config-ref="HL7_EDI_Config" />
 
-        <ee:transform doc:name="Transform Message" doc:id="6ae35d73-9de3-49a4-a5a7-baad77e228d4">
+        <choice doc:name="Choice" doc:id="5e9ce74d-0038-4c83-9533-76593860fb7a" >
+			<when expression="#[1 == 0]">
+				<ee:transform doc:name="Transform Message" doc:id="6f7a58de-4de1-4469-b1f1-63599a589d23">
+					<ee:message>
+						<ee:set-payload resource="dwFhir/patient/patient-raw-dataweave.dwl" />
+					</ee:message>
+				</ee:transform>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Transform Message" doc:id="6ae35d73-9de3-49a4-a5a7-baad77e228d4">
 			<ee:message>
 				<ee:set-payload resource="dwFhir/patient/patient-refactored-dataweave.dwl" />
 			</ee:message>
 		</ee:transform>
+			</otherwise>
+		</choice>
 
-        <!--
-        <ee:transform doc:name="Transform Message" doc:id="6ae35d73-9de3-49a4-a5a7-baad77e228d4">
-			<ee:message>
-				<ee:set-payload resource="dwFhir/patient/patient-raw-dataweave.dwl" />
-			</ee:message>
-		</ee:transform>
-        -->
 
 		<logger level="INFO" doc:name="Logger" doc:id="3041ad9f-0e70-4686-a526-0ea5eca229ef" />
 	</sub-flow>
