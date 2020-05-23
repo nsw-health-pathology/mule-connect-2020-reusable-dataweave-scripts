@@ -2,6 +2,7 @@
 
 import modules::gender
 import modules::humanName
+import modules::timestamp
 
 output application/json
 ---
@@ -22,14 +23,8 @@ output application/json
      active: true,
      name: payload.Data.ADT_A04.PID."PID-05" map (value, index) -> humanName::humanNameFromXPN(value),
 
- 	gender: gender::genderFromPid(payload.Data.ADT_A04.PID),
-	birthDate:
-		if (payload.Data.ADT_A04.PID."PID-07"."TS-01" != null)
-			if (sizeOf(payload.Data.ADT_A04.PID."PID-07"."TS-01" default "") > 8)
-				(payload.Data.ADT_A04.PID."PID-07"."TS-01" default "") as Date { format: "yyyyMMddHHmmss" } as String {format: "yyyy-MM-dd"}
-			else
-				(payload.Data.ADT_A04.PID."PID-07"."TS-01" default "") as Date {format: "yyyyMMdd"} as String {format: "yyyy-MM-dd"}
-		else null
+    gender: gender::genderFromPid(payload.Data.ADT_A04.PID),
+    birthDate: timestamp::fhirDateFromTS(payload.Data.ADT_A04.PID."PID-07"."TS-01")
 
 
 }
