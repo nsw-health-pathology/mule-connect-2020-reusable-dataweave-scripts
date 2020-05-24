@@ -64,6 +64,17 @@ type patient_json = {|
 
 ]]></types:shape>
     </types:type>
+    <types:type name="adt-a04-xml" format="xml">
+      <types:example format="xml" element="{urn:hl7-org:v2xml}ADT_A01" location="examples/adt_a04.xml"/>
+    </types:type>
+    <types:type name="adt-a04" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="hashmap" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
   </types:catalog>
   <types:enrichment select="#6ae35d73-9de3-49a4-a5a7-baad77e228d4">
     <types:processor-declaration>
@@ -74,4 +85,5 @@ type patient_json = {|
       </types:output-event>
     </types:processor-declaration>
   </types:enrichment>
+  <types:enrichment select="#6f7a58de-4de1-4469-b1f1-63599a589d23"/>
 </types:mule>

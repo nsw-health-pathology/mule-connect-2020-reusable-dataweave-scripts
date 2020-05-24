@@ -1,0 +1,364 @@
+form: HL7
+version: '2.3.1'
+structures: 
+- id: 'ADT_A04'
+  name: 'ADT_A04'
+  data: 
+  - { idRef: 'MSH', position: '01', usage: M }
+  - { idRef: 'EVN', position: '02', usage: M }
+  - { idRef: 'PID', position: '03', usage: M }
+  - { idRef: 'NK1', position: '09', usage: O, count: '>1' }
+  - { idRef: 'PV1', position: '12', usage: M }
+  - groupId: 'INSURANCE'
+    count: '>1'
+    usage: O
+    items: 
+    - { idRef: 'IN1', position: '56', usage: M }
+segments: 
+- id: 'EVN'
+  name: 'EVN - event type segment'
+  varTag: 'EVN'
+  values: 
+  - { idRef: 'ID', name: 'Event Type Code', usage: O }
+  - { idRef: 'TS', name: 'Recorded Date/Time', usage: M }
+  - { idRef: 'varies', name: 'Date/Time Planned Event', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Event Reason Code', usage: U, count: '>1' }
+  - { idRef: 'XCN', name: 'Operator ID', usage: O, count: '>1' }
+- id: 'IN1'
+  name: 'IN1 - insurance segment'
+  varTag: 'IN1'
+  values: 
+  - { idRef: 'SI', name: 'Set ID - IN1', usage: M }
+  - { idRef: 'CE_0072', name: 'Insurance Plan ID', usage: M }
+  - { idRef: 'CX', name: 'Insurance Company ID', usage: M, count: '>1' }
+  - { idRef: 'varies', name: 'Insurance Company Name', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Insurance Company Address', usage: U, count: '>1' }
+  - { idRef: 'XPN_2', name: 'Insurance Co Contact Person', usage: O, count: '>1' }
+  - { idRef: 'varies', name: 'Insurance Co Phone Number', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Group Number', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Group Name', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Insured’s Group Emp ID', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Insured’s Group Emp Name', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Plan Effective Date', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Plan Expiration Date', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Authorization Information', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Plan Type', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Name Of Insured', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Insured’s Relationship To Patient', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Insured’s Date Of Birth', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Insured’s Address', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Assignment Of Benefits', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Coordination Of Benefits', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Coord Of Ben. Priority', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Notice Of Admission Flag', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Notice Of Admission Date', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Report Of Eligibility Flag', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Report Of Eligibility Date', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Release Information Code', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Pre-Admit Cert (PAC)', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Verification Date/Time', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Verification By', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Type Of Agreement Code', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Billing Status', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Lifetime Reserve Days', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Delay Before L.R. Day', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Company Plan Code', usage: U, count: '>1' }
+  - { idRef: 'ST', name: 'Policy Number', usage: O }
+- id: 'MSH'
+  name: 'MSH - message header segment'
+  varTag: 'MSH'
+  values: 
+  - { idRef: 'varies', name: 'Field Separator', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Encoding Characters', usage: U, count: '>1' }
+  - { idRef: 'HD', name: 'Sending Application', usage: O }
+  - { idRef: 'HD', name: 'Sending Facility', usage: O }
+  - { idRef: 'HD', name: 'Receiving Application', usage: O }
+  - { idRef: 'HD', name: 'Receiving Facility', usage: O }
+  - { idRef: 'TS', name: 'Date/Time Of Message', usage: O }
+  - { idRef: 'varies', name: 'Security', usage: U, count: '>1' }
+  - { idRef: 'MSG', usage: M }
+  - { idRef: 'ST', name: 'Message Control ID', usage: M }
+  - { idRef: 'PT', name: 'Processing ID', usage: M }
+  - { idRef: 'VID', name: 'Version ID', usage: M }
+- id: 'NK1'
+  name: 'NK1 - next of kin / associated parties segment-'
+  varTag: 'NK1'
+  values: 
+  - { idRef: 'SI', name: 'Set ID - NK1', usage: M }
+  - { idRef: 'XPN_1', name: 'Name', usage: O, count: '>1' }
+  - { idRef: 'CE_0063', name: 'Relationship', usage: O }
+  - { idRef: 'XAD_1', name: 'Address', usage: O, count: '>1' }
+  - { idRef: 'XTN_1', name: 'Phone Number', usage: O, count: '>1' }
+  - { idRef: 'XTN_1', name: 'Business Phone Number', usage: O, count: '>1' }
+  - { idRef: 'CE_0131', name: 'Contact Role', usage: O }
+- id: 'PID'
+  name: 'PID - patient identification segment'
+  varTag: 'PID'
+  values: 
+  - { idRef: 'SI', name: 'Set ID - PID', usage: O }
+  - { idRef: 'varies', name: 'Patient ID', usage: U, count: '>1' }
+  - { idRef: 'CX', name: 'Patient Identifier List', usage: M, count: '>1' }
+  - { idRef: 'CX_1', name: 'Alternate Patient ID - PID', usage: O, count: '>1' }
+  - { idRef: 'XPN', name: 'Patient Name', usage: M, count: '>1' }
+  - { idRef: 'varies', name: 'Mother’s Maiden Name', usage: U, count: '>1' }
+  - { idRef: 'TS', name: 'Date/Time Of Birth', usage: O }
+  - { idRef: 'IS', name: 'Sex', usage: O }
+  - { idRef: 'varies', name: 'Patient Alias', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Race', usage: U, count: '>1' }
+  - { idRef: 'XAD', name: 'Patient Address', usage: O, count: '>1' }
+  - { idRef: 'IS', name: 'County Code', usage: O }
+  - { idRef: 'XTN', name: 'Phone Number - Home', usage: O, count: '>1' }
+  - { idRef: 'varies', name: 'Phone Number - Business', usage: U, count: '>1' }
+  - { idRef: 'CE_0296', name: 'Primary Language', usage: O }
+  - { idRef: 'CE_0002', name: 'Marital Status', usage: O }
+  - { idRef: 'CE_0006', name: 'Religion', usage: O }
+  - { idRef: 'CX_2', name: 'Patient Account Number', usage: O }
+  - { idRef: 'varies', name: 'SSN Number - Patient', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Driver''s License Number - Patient', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Mother''s Identifier', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Ethnic Group', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Birth Place', usage: U, count: '>1' }
+  - { idRef: 'ID', name: 'Multiple Birth Indicator', usage: O }
+  - { idRef: 'NM', name: 'Birth Order', usage: O }
+  - { idRef: 'varies', name: 'Citizenship', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Veterans Military Status', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Nationality', usage: U, count: '>1' }
+  - { idRef: 'TS', name: 'Patient Death Date and Time', usage: O }
+  - { idRef: 'ID', name: 'Patient Death Indicator', usage: O }
+- id: 'PV1'
+  name: 'PV1 - patient visit segment-'
+  varTag: 'PV1'
+  values: 
+  - { idRef: 'SI', name: 'Set ID - PV1', usage: O }
+  - { idRef: 'IS', name: 'Patient Class', usage: M }
+  - { idRef: 'PL', name: 'Assigned Patient Location', usage: O }
+  - { idRef: 'varies', name: 'Admission Type', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Preadmit Number', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Prior Patient Location', usage: U, count: '>1' }
+  - { idRef: 'XCN_1', name: 'Attending Doctor', usage: O, count: '>1' }
+  - { idRef: 'XCN_2', name: 'Referring Doctor', usage: O, count: '>1' }
+  - { idRef: 'varies', name: 'Consulting Doctor', usage: U, count: '>1' }
+  - { idRef: 'IS', name: 'Hospital Service', usage: O }
+  - { idRef: 'varies', name: 'Temporary Location', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Preadmit Test Indicator', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Re-admission Indicator', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Admit Source', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Ambulatory Status', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'VIP Indicator', usage: U, count: '>1' }
+  - { idRef: 'XCN_3', name: 'Admitting Doctor', usage: O, count: '>1' }
+  - { idRef: 'IS', name: 'Patient Type', usage: O }
+  - { idRef: 'CX_2', name: 'Visit Number', usage: O }
+  - { idRef: 'FC', name: 'Financial Class', usage: O, count: '>1' }
+  - { idRef: 'varies', name: 'Charge Price Indicator', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Courtesy Code', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Credit Rating', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Contract Code', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Contract Effective Date', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Contract Amount', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Contract Period', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Interest Code', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Transfer to Bad Debt Code', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Transfer to Bad Debt Date', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Bad Debt Agency Code', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Bad Debt Transfer Amount', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Bad Debt Recovery Amount', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Delete Account Indicator', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Delete Account Date', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Discharge Disposition', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Discharged to Location', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Diet Type', usage: U, count: '>1' }
+  - { idRef: 'IS', name: 'Servicing Facility', usage: O }
+  - { idRef: 'varies', name: 'Bed Status', usage: U, count: '>1' }
+  - { idRef: 'IS', name: 'Account Status', usage: O }
+  - { idRef: 'varies', name: 'Pending Location', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Prior Temporary Location', usage: U, count: '>1' }
+  - { idRef: 'TS', name: 'Admit Date/Time', usage: O }
+composites: 
+- id: 'CE_0002'
+  name: 'CE with table 2'
+  values: 
+  - { idRef: 'ST', name: 'identifier', usage: O }
+- id: 'CE_0006'
+  name: 'CE with table 6'
+  values: 
+  - { idRef: 'ST', name: 'identifier', usage: O }
+- id: 'CE_0063'
+  values: 
+  - { idRef: 'ST', name: 'identifier', usage: O }
+- id: 'CE_0072'
+  values: 
+  - { idRef: 'ST', name: 'identifier', usage: O }
+  - { idRef: 'ST', name: 'text', usage: O }
+- id: 'CE_0131'
+  values: 
+  - { idRef: 'ST', name: 'identifier', usage: O }
+- id: 'CE_0296'
+  values: 
+  - { idRef: 'varies', name: 'identifier', usage: U, count: '>1' }
+  - { idRef: 'ST', name: 'text', usage: O }
+- id: 'CX'
+  name: 'extended composite ID with check digit'
+  values: 
+  - { idRef: 'ST', name: 'ID', usage: O }
+  - { idRef: 'varies', name: 'check digit', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'code identifying the check digit scheme employed', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'assigning authority', usage: U, count: '>1' }
+  - { idRef: 'IS', name: 'identifier type code', usage: O }
+- id: 'CX_1'
+  name: 'extended composite ID with check digit'
+  values: 
+  - { idRef: 'ST', name: 'ID', usage: O }
+  - { idRef: 'NM', name: 'check digit', usage: O }
+  - { idRef: 'varies', name: 'code identifying the check digit scheme employed', usage: U, count: '>1' }
+  - { idRef: 'HD', name: 'assigning authority', usage: O }
+- id: 'CX_2'
+  name: 'extended composite ID with check digit'
+  values: 
+  - { idRef: 'ST', name: 'ID', usage: O }
+- id: 'FC'
+  name: 'financial class'
+  values: 
+  - { idRef: 'IS', name: 'Financial Class', usage: O }
+- id: 'FN'
+  name: 'family + last name prefix'
+  values: 
+  - { idRef: 'ST', name: 'family name', usage: O }
+- id: 'HD'
+  name: 'hierarchic designator'
+  values: 
+  - { idRef: 'IS', name: 'namespace ID', usage: O }
+- id: 'MSG'
+  name: 'Message Type'
+  values: 
+  - { idRef: 'ID', name: 'message type', usage: O }
+  - { idRef: 'ID', name: 'trigger event', usage: O }
+- id: 'PL'
+  name: 'person location'
+  values: 
+  - { idRef: 'IS', name: 'point of care', usage: O }
+  - { idRef: 'IS', name: 'room', usage: O }
+- id: 'PT'
+  name: 'processing type'
+  values: 
+  - { idRef: 'ID', name: 'processing ID', usage: O }
+- id: 'TS'
+  name: 'time stamp'
+  values: 
+  - { idRef: 'ST', name: 'time of an event', usage: O }
+- id: 'VID'
+  name: 'version identifier'
+  values: 
+  - { idRef: 'ID', name: 'version ID', usage: O }
+- id: 'XAD'
+  name: 'extended address'
+  values: 
+  - { idRef: 'ST', name: 'street address', usage: O }
+  - { idRef: 'ST', name: 'other designation', usage: O }
+  - { idRef: 'ST', name: 'city', usage: O }
+  - { idRef: 'ST', name: 'state or province', usage: O }
+  - { idRef: 'ST', name: 'zip or postal code', usage: O }
+  - { idRef: 'ID', name: 'country', usage: O }
+  - { idRef: 'ID', name: 'address type', usage: O }
+  - { idRef: 'varies', name: 'other geographic designation', usage: U, count: '>1' }
+  - { idRef: 'IS', name: 'county/parish code', usage: O }
+- id: 'XAD_1'
+  name: 'extended address'
+  values: 
+  - { idRef: 'ST', name: 'street address', usage: O }
+  - { idRef: 'varies', name: 'other designation', usage: U, count: '>1' }
+  - { idRef: 'ST', name: 'city', usage: O }
+  - { idRef: 'ST', name: 'state or province', usage: O }
+  - { idRef: 'varies', name: 'zip or postal code', usage: U, count: '>1' }
+  - { idRef: 'ID', name: 'country', usage: O }
+- id: 'XCN'
+  name: 'extended composite ID number and name for persons'
+  values: 
+  - { idRef: 'varies', name: 'ID number (ST)', usage: U, count: '>1' }
+  - { idRef: 'FN', name: 'family+last name', usage: O }
+  - { idRef: 'ST', name: 'given name', usage: O }
+- id: 'XCN_1'
+  name: 'extended composite ID number and name for persons'
+  values: 
+  - { idRef: 'ST', name: 'ID number (ST)', usage: O }
+  - { idRef: 'FN', name: 'family+last name', usage: O }
+  - { idRef: 'ST', name: 'given name', usage: O }
+  - { idRef: 'varies', name: 'middle initial or name', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'suffix (e.g., JR or III)', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'prefix (e.g., DR)', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'degree (e.g., MD)', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'source table', usage: U, count: '>1' }
+  - { idRef: 'HD', name: 'assigning authority', usage: O }
+  - { idRef: 'ID', name: 'name type code', usage: O }
+  - { idRef: 'varies', name: 'identifier check digit', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'code identifying the check digit scheme employed', usage: U, count: '>1' }
+  - { idRef: 'IS', name: 'identifier type code', usage: O }
+- id: 'XCN_2'
+  name: 'extended composite ID number and name for persons'
+  values: 
+  - { idRef: 'varies', name: 'ID number (ST)', usage: U, count: '>1' }
+  - { idRef: 'FN', name: 'family+last name', usage: O }
+  - { idRef: 'ST', name: 'given name', usage: O }
+  - { idRef: 'varies', name: 'middle initial or name', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'suffix (e.g., JR or III)', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'prefix (e.g., DR)', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'degree (e.g., MD)', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'source table', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'assigning authority', usage: U, count: '>1' }
+  - { idRef: 'ID', name: 'name type code', usage: O }
+- id: 'XCN_3'
+  name: 'extended composite ID number and name for persons'
+  values: 
+  - { idRef: 'ST', name: 'ID number (ST)', usage: O }
+  - { idRef: 'FN', name: 'family+last name', usage: O }
+  - { idRef: 'ST', name: 'given name', usage: O }
+  - { idRef: 'varies', name: 'middle initial or name', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'suffix (e.g., JR or III)', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'prefix (e.g., DR)', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'degree (e.g., MD)', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'source table', usage: U, count: '>1' }
+  - { idRef: 'HD', name: 'assigning authority', usage: O }
+  - { idRef: 'ID', name: 'name type code', usage: O }
+  - { idRef: 'varies', name: 'identifier check digit', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'code identifying the check digit scheme employed', usage: U, count: '>1' }
+  - { idRef: 'IS', name: 'identifier type code', usage: O }
+- id: 'XPN'
+  name: 'extended person name'
+  values: 
+  - { idRef: 'FN', name: 'family+last name', usage: O }
+  - { idRef: 'ST', name: 'given name', usage: O }
+  - { idRef: 'ST', name: 'middle initial or name', usage: O }
+  - { idRef: 'ST', name: 'suffix (e.g., JR or III)', usage: O }
+  - { idRef: 'ST', name: 'prefix (e.g., DR)', usage: O }
+  - { idRef: 'varies', name: 'degree (e.g., MD)', usage: U, count: '>1' }
+  - { idRef: 'ID', name: 'name type code', usage: O }
+- id: 'XPN_1'
+  name: 'extended person name'
+  values: 
+  - { idRef: 'FN', name: 'family+last name', usage: O }
+  - { idRef: 'ST', name: 'given name', usage: O }
+- id: 'XPN_2'
+  name: 'extended person name'
+  values: 
+  - { idRef: 'FN', name: 'family+last name', usage: O }
+- id: 'XTN'
+  name: 'extended telecommunication number'
+  values: 
+  - { idRef: 'TN', name: '[(999)] 999-9999 [X99999][C any text]', usage: O }
+  - { idRef: 'ID', name: 'telecommunication use code', usage: O }
+  - { idRef: 'ID', name: 'telecommunication equipment type (ID)', usage: O }
+  - { idRef: 'varies', name: 'Email address', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Country Code', usage: U, count: '>1' }
+  - { idRef: 'varies', name: 'Area/city code', usage: U, count: '>1' }
+  - { idRef: 'NM', name: 'Phone number', usage: O }
+- id: 'XTN_1'
+  name: 'extended telecommunication number'
+  values: 
+  - { idRef: 'TN', name: '[(999)] 999-9999 [X99999][C any text]', usage: O }
+elements: 
+  - { id: 'ID', type: ID, minLength: 1, maxLength: 9999 }
+  - { id: 'IS', type: IS, minLength: 1, maxLength: 9999 }
+  - { id: 'NM', type: NM, minLength: 1, maxLength: 9999 }
+  - { id: 'SI', type: SI, minLength: 1, maxLength: 9999 }
+  - { id: 'ST', type: ST, minLength: 1, maxLength: 9999 }
+  - { id: 'TN', type: TN, minLength: 1, maxLength: 9999 }
+  - { id: 'varies', name: 'varies', type: varies, length: 0 }
