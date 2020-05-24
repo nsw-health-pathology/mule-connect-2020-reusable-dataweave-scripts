@@ -20,6 +20,6 @@ output application/json skipNullOn="everywhere"
     name: pid."PID-05" map (value, index) -> humanName::humanNameFromXPN(value),
     gender: gender::genderFromPid(pid),
     birthDate: timestamp::fhirDateFromTS(pid."PID-07"."TS-01"),
-	deceasedBoolean: boolean::fhirBooleanFromNullable(pid."PID.30"),
-    deceasedDateTime: timestamp::fhirDateFromTS(pid."PID.29"."TS.1")
+	deceasedBoolean: boolean::fhirBooleanFromNullable(pid."PID-30"),
+    deceasedDateTime: timestamp::fhirDateFromTS(pid."PID-29"."TS-1")
 }
