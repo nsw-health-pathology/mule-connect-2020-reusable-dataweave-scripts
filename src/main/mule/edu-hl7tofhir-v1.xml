@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
-	xmlns:mllp="http://www.mulesoft.org/schema/mule/mllp" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:hl7="http://www.mulesoft.org/schema/mule/hl7" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd       http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd       http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/hl7 http://www.mulesoft.org/schema/mule/hl7/current/mule-hl7.xsd
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/mllp http://www.mulesoft.org/schema/mule/mllp/current/mule-mllp.xsd">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:hl7="http://www.mulesoft.org/schema/mule/hl7" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mllp="http://www.mulesoft.org/schema/mule/mllp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd       http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd       http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/hl7 http://www.mulesoft.org/schema/mule/hl7/current/mule-hl7.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/mllp http://www.mulesoft.org/schema/mule/mllp/current/mule-mllp.xsd">
     <configuration-properties file="mule-artifact.properties" />
     <apikit:config name="router-config" raml="api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <http:listener-config name="httpListenerConfigDefault">
         <http:listener-connection host="0.0.0.0" port="${http.port}" />
     </http:listener-config>
-    <hl7:config name="HL7_EDI_Config" doc:name="HL7 EDI Config" doc:id="7ea64e79-9d55-4d0e-a662-9c2ff4a02370" >
-		<hl7:schemas >
-			<hl7:schema value="/hl7/v2_3_1/ADT_A04.esl" />
-		</hl7:schemas>
-	</hl7:config>
-	<mllp:mllp-listener-config name="HL7_MLLP_Mllp_listener_config" doc:name="HL7 MLLP Mllp listener config" doc:id="75578354-cfb2-4df0-80fa-a1d628826d14" >
-		<mllp:mllp-listener-connection host="0.0.0.0" port="8000" />
-	</mllp:mllp-listener-config>
+    <hl7:config name="HL7_EDI_Config" doc:name="HL7 EDI Config" doc:id="7ea64e79-9d55-4d0e-a662-9c2ff4a02370">
+        <hl7:schemas>
+            <hl7:schema value="/hl7/v2_3_1/ADT_A04.esl" />
+        </hl7:schemas>
+    </hl7:config>
+    <mllp:mllp-listener-config name="HL7_MLLP_Mllp_listener_config" doc:name="HL7 MLLP Mllp listener config" doc:id="75578354-cfb2-4df0-80fa-a1d628826d14">
+        <mllp:mllp-listener-connection host="0.0.0.0" port="8000" />
+    </mllp:mllp-listener-config>
+    <mllp:request-config name="HL7_MLLP_Request_config" doc:name="HL7 MLLP Request config" doc:id="ef65f029-5ef8-441e-8744-389e68bf9d68" >
+		<mllp:mllp-requester-connection host="localhost" port="8001" />
+	</mllp:request-config>
 	<flow name="main-api">
         <http:listener config-ref="httpListenerConfigDefault" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
@@ -30,7 +29,7 @@ http://www.mulesoft.org/schema/mule/mllp http://www.mulesoft.org/schema/mule/mll
         <apikit:router config-ref="router-config" />
         <error-handler>
             <on-error-propagate type="APIKIT:BAD_REQUEST">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -43,7 +42,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:NOT_FOUND">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -56,7 +55,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -69,7 +68,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -82,7 +81,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -95,7 +94,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -122,8 +121,7 @@ output application/json
         <apikit:console config-ref="router-config" />
         <error-handler>
             <on-error-propagate type="APIKIT:NOT_FOUND">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="
-http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation=" http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -137,38 +135,36 @@ output application/json
             </on-error-propagate>
         </error-handler>
     </flow>
+    
     <flow name="post:\hl7-v2\adt:router-config">
-		<flow-ref doc:name="Flow Reference" doc:id="4a1f0b83-0860-4544-a63a-946983c7ab95" name="edu-hl7tofhir-v1Sub_Flow"/>
+    	<logger level="INFO" message="Not implemented" doc:name="Log: Not implemeted" />
     </flow>
-	<sub-flow name="edu-hl7tofhir-v1Sub_Flow" doc:id="776dddac-a046-4b6a-888b-c19f6eac81cb" >
-		<logger level="INFO" message="Before DataWeave: #[payload]" doc:name="Log: Before Payload"/>
-		<choice doc:name="Choice" doc:id="5e9ce74d-0038-4c83-9533-76593860fb7a" >
-			<when expression="#[1 == 0]">
-				<ee:transform doc:name="Transform Message" doc:id="6f7a58de-4de1-4469-b1f1-63599a589d23">
-					<ee:message>
-						<ee:set-payload resource="dwFhir/patient/patient-raw-dataweave.dwl" />
-					</ee:message>
-				</ee:transform>
-			</when>
-			<otherwise >
-				<ee:transform doc:name="Transform Message" doc:id="6ae35d73-9de3-49a4-a5a7-baad77e228d4">
-			<ee:message>
-				<ee:set-payload resource="dwFhir/patient/patient-refactored-dataweave.dwl" />
-			</ee:message>
-		</ee:transform>
-			</otherwise>
-		</choice>
-
-
-		<logger level="INFO" doc:name="Log: After Payload" doc:id="3041ad9f-0e70-4686-a526-0ea5eca229ef" message="After DataWeave: #[payload]"/>
-	</sub-flow>
-	<flow name="edu-hl7tofhir-v1Flow" doc:id="c7f6389a-4ee9-4897-a8fc-a5be7e2e1e49" >
-		<mllp:mllp-listener doc:name="Mllp listener" doc:id="e9dd414a-de88-4fb4-adde-8bc64309ea28" config-ref="HL7_MLLP_Mllp_listener_config"/>
-		<hl7:read doc:name="Read" doc:id="7cb28a6a-d4c2-44c9-8665-b21907a644b7" config-ref="HL7_EDI_Config" />
-		<ee:transform doc:name="Extract ACK" doc:id="ba4d09b0-1912-4093-8ad2-419e9d8803c1" >
-			
-			<ee:variables >
-				<ee:set-variable variableName="ack" ><![CDATA[%dw 2.0
+    <sub-flow name="convert-hl7-to-fhir-patient" doc:id="776dddac-a046-4b6a-888b-c19f6eac81cb">
+        <logger level="INFO" message="Before DataWeave: #[payload]" doc:name="Log: Before Payload" />
+        <choice doc:name="Choice" doc:id="5e9ce74d-0038-4c83-9533-76593860fb7a">
+            <when expression="#[1 == 0]">
+                <ee:transform doc:name="Generate Patient Resource: Single DataWeave" doc:id="6f7a58de-4de1-4469-b1f1-63599a589d23">
+                    <ee:message>
+                        <ee:set-payload resource="dwFhir/patient/patient-raw-dataweave.dwl" />
+                    </ee:message>
+                </ee:transform>
+            </when>
+            <otherwise>
+                <ee:transform doc:name="Generate Patient Resource: Refactored DataWeave" doc:id="6ae35d73-9de3-49a4-a5a7-baad77e228d4">
+                    <ee:message>
+                        <ee:set-payload resource="dwFhir/patient/patient-refactored-dataweave.dwl" />
+                    </ee:message>
+                </ee:transform>
+            </otherwise>
+        </choice>
+        <logger level="INFO" doc:name="Log: After Payload" doc:id="3041ad9f-0e70-4686-a526-0ea5eca229ef" message="After DataWeave: #[payload]" />
+    </sub-flow>
+    <flow name="edu-hl7tofhir-v1Flow" doc:id="c7f6389a-4ee9-4897-a8fc-a5be7e2e1e49">
+        <mllp:mllp-listener doc:name="Mllp listener" doc:id="e9dd414a-de88-4fb4-adde-8bc64309ea28" config-ref="HL7_MLLP_Mllp_listener_config" />
+        <hl7:read doc:name="Read" doc:id="7cb28a6a-d4c2-44c9-8665-b21907a644b7" config-ref="HL7_EDI_Config" />
+        <ee:transform doc:name="Extract ACK" doc:id="ba4d09b0-1912-4093-8ad2-419e9d8803c1">
+            <ee:variables>
+                <ee:set-variable variableName="ack"><![CDATA[%dw 2.0
 output application/java
 ---
 
@@ -180,12 +176,20 @@ output application/java
     ACK: payload.ACK
   }
 }]]></ee:set-variable>
-			</ee:variables>
-		</ee:transform>
-		
-		<flow-ref doc:name="Flow Reference" doc:id="eb60907f-b86e-4e8c-994c-42e4265208e1" name="edu-hl7tofhir-v1Sub_Flow" />
-		<set-payload value="#[vars.ack]" doc:name="Set Payload to ack" doc:id="3decb509-496a-4033-aff4-77a06c94d525" />
-		<hl7:write doc:name="Write" doc:id="79d1bb22-f998-4fe3-840c-9ffcbeadc8fd" config-ref="HL7_EDI_Config"/>
-		<logger level="INFO" doc:name="Log Ack" doc:id="df1c5fd8-2144-4f70-ab32-70c3c15d753b" message="#[payload]"/>
-	</flow>
+            </ee:variables>
+        </ee:transform>
+        <flow-ref doc:name="Flow Reference" doc:id="eb60907f-b86e-4e8c-994c-42e4265208e1" name="convert-hl7-to-fhir-patient" />
+        <set-payload value="#[vars.ack]" doc:name="Set Payload to ack" doc:id="3decb509-496a-4033-aff4-77a06c94d525" />
+        <hl7:write doc:name="Write" doc:id="79d1bb22-f998-4fe3-840c-9ffcbeadc8fd" config-ref="HL7_EDI_Config" />
+        <logger level="INFO" doc:name="Log Ack" doc:id="df1c5fd8-2144-4f70-ab32-70c3c15d753b" message="#[payload]" />
+    </flow>
+    
+    <!-- 
+    <flow name="post:\hl7-v2\ack:router-config">
+        <hl7:read doc:name="Read" doc:id="fbee8225-a957-498b-b4bd-109639d3125b" config-ref="HL7_EDI_Config"/>
+		<logger level="INFO" message='#[payload.MSH."MSH-10"]' doc:name="Log: MSH-10"/>
+		<hl7:write doc:name="Write" doc:id="7dc7844f-7b11-4158-bc02-d7296e319f3e" config-ref="HL7_EDI_Config" />
+		<mllp:send doc:name="Send" doc:id="21862923-f42e-4c65-8a3e-6a6a8d478eec" config-ref="HL7_MLLP_Request_config"/>
+    </flow>
+     -->
 </mule>
