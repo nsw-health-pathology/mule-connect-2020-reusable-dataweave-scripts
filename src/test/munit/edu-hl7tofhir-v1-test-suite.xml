@@ -9,7 +9,7 @@
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<munit:config name="edu-hl7tofhir-v1-test-suite.xml" />
-	<munit:test name="edu-hl7tofhir-v1-test-suite-edu-hl7tofhir-v1Sub_FlowTest" description="Test" doc:id="7d4c41ce-4b8a-47b8-8cbc-3cc002fac33e" >
+	<munit:test name="dw-gender-test" description="Test" doc:id="7d4c41ce-4b8a-47b8-8cbc-3cc002fac33e" >
 		<munit:execution >
 			<ee:transform doc:name="Transform Message" doc:id="4659f62e-35f4-4e41-a6ab-c0e455bea335" >
 				<ee:message >
